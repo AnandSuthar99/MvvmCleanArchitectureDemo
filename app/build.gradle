@@ -1,0 +1,94 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+ext {
+    retrofit_version = '2.9.0'
+    lifecycle_version = '2.6.0-alpha01'
+    navigationFragmentKtxVersion = navigation_version
+    glide_version = '4.13.2'
+    room_version = "2.4.3"
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.mvvmcleanarchitecturedemo"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "API_KEY", NEWS_API_KEY
+        buildConfigField "String", "BASE_URL", NEWS_BASE_URL
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10'
+
+    // ViewModel & LiveData
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationFragmentKtxVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltAndroidVersion"
+
+    implementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation 'androidx.test:core-ktx:1.5.0-alpha01'
+    testImplementation 'org.mockito:mockito-core:4.6.1'
+
+    implementation 'com.squareup.okhttp3:mockwebserver:5.0.0-alpha.10'
+    implementation 'com.google.truth:truth:1.1.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
